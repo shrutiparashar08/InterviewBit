@@ -1,0 +1,54 @@
+// The question is : Given a Binary String with only 1s and 0s.Your aim is to perform ATMOST one operation such that in final string number of 1s is maximised.
+//In case there are two answers , return the answer in lexcological order.
+//Pair (a, b) is lexicographically smaller than pair (c, d) if a < c or, if a == c and b < d.
+
+vector<int> Solution::flip(string A) {
+    
+    int len = A.length();
+    vector<int> tempvector(len);
+    vector<int> res;
+    for(int i =0;i<len;i++)
+    {
+        if(A[i] == '1')
+        {
+            tempvector[i] = -1;
+        }
+        else
+        {
+            tempvector[i] = 1;
+        }
+    }
+    int max_sum = 0, curr_sum = 0, Left = 0, right = 0,final_left;
+    bool is_flip = false;
+    for(int i =0;i<len;i++)
+    {
+        if(tempvector[i] + curr_sum <0)
+        {
+            //cout<<"the values are"<< tempvector[i]<<curr_sum;
+            //cout<<"the value of i is"<<i<<endl;
+            curr_sum = 0;
+            Left = i+1;
+        }
+        else
+        {
+            curr_sum = curr_sum+tempvector[i];
+            //cout<<"the current sum is"<<curr_sum<<endl;
+        }
+        if(curr_sum > max_sum)
+        {
+            max_sum = curr_sum;
+            right = i;
+            final_left = Left;
+            is_flip = true;
+           //cout<<"the next value is"<<i<<endl;
+            
+        }
+    }
+    if(!is_flip)
+    {
+        return (res);
+    }
+    res.push_back(final_left+1);
+    res.push_back(right+1);
+    return(res);    
+}
