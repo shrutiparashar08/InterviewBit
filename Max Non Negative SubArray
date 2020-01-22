@@ -1,0 +1,72 @@
+/*
+The question: Given an array of integers, A of length N, find out the maximum sum sub-array of non negative numbers from A.
+*/
+
+Note: 1. If there is a tie, then compare with segment's length and return segment which has maximum length.
+    2. If there is still a tie, then return the segment with minimum starting index.
+    
+    
+    vector<int> Solution::maxset(vector<int> &A) {
+    /**
+ * @input A : Integer array
+ * @input n1 : Integer array's ( A ) length
+ * 
+ * @Output Integer array. You need to malloc memory, and fill the length in len1
+ */
+   int start=0,end=0,curr_count = 0,max_count = 0;
+   long long int max_sum = 0,curr_sum = 0;
+   for(int i =0;i<A.size();i++)
+   {
+       if(A[i] < 0)
+       {
+           curr_sum = 0;
+           curr_count = 0;
+           start = i+1;
+       }
+       else
+       {
+           curr_sum = curr_sum + A[i];
+           curr_count = curr_count+1;
+       }
+     //  cout<<"the count is "<<curr_count;
+       
+       if(max_sum < curr_sum)
+       {
+           max_sum = curr_sum;
+           end = i;
+       }
+       if(max_sum == curr_sum)
+       {
+           if(curr_count > max_count)
+           {
+               end = i;
+               max_count = curr_count;
+           }
+       }
+   }
+   //cout<<"the end is"<<end;
+   vector<int> output;
+   if(A[end] < 0)
+   {
+       return (output);
+   }
+   if(end == 0)
+   {
+       output.push_back(A[0]);
+       return (output);
+   }
+   for(int i =end;i >=0;i--)
+   {
+       if(A[i] < 0)
+       {
+           break;
+       }
+       start = i;
+   }
+   //cout<<"the start is"<<start;
+   for(int i = start;i <= end;i++)
+   {
+       output.push_back(A[i]);
+   }
+   return (output);
+}
