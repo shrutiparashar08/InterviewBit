@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int curr_len = 1;
+        int max_len =1;
+        int visited[256];
+        int previous;
+        if(s.length() == 0)
+        {
+            return 0;
+        }
+        for(int i =0;i<256;i++)
+        {
+            visited[i] = -1;
+        }
+        visited[s[0]] = 0;
+        for(int i =1;i<s.length();i++)
+        {
+           previous = visited[s[i]];
+            if(previous == -1 ||
+                (i-curr_len) > previous)
+            {
+                curr_len++;
+            }
+            else
+            {
+                if(max_len < curr_len)
+                {
+                    max_len = curr_len;
+                }
+                curr_len = i-previous;
+            }
+            visited[s[i]] = i;
+            
+        }
+        if(curr_len>max_len)
+        {
+            max_len = curr_len;
+        }
+        
+        return(max_len);
+    }
+};
